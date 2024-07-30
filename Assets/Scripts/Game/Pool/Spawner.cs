@@ -23,11 +23,6 @@ namespace Game.Pool
                 SpawnBullet();
         }
         
-        public void SpawnBullet(MergeSlot slot, int mergeLevel)
-        {
-            Knife knife = _knifePool.Pull(slot.transform.position);
-            knife.Initialize(slot, mergeLevel);
-        }
         
         public void SpawnBullet()
         {

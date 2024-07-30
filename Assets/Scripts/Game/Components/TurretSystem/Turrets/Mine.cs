@@ -1,6 +1,6 @@
-namespace Scripts.Game.Components.Turret
+namespace Scripts.Game.Components.TurretSystem.Turrets
 {
-    public class Turret: TurretBase
+    public class Mine : TurretBase
     {
         protected override void Activate()
         {

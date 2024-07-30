@@ -1,16 +1,16 @@
 using UnityEngine;
 
-namespace Scripts.Game.Components.Turret
+namespace Scripts.Game.Components.TurretSystem.Turrets
 {
     public class Mortar : TurretBase
     {
         [SerializeField, Range(0,1)] private float _deadRangePercentage;
         private float _deadRange;
 
-        protected override void Initialize(float damage, float range)
+        protected override void Initialize()
         {
-            base.Initialize(damage, range);
-            _deadRange = range * _deadRangePercentage;
+            base.Initialize();
+            _deadRange = Range * _deadRangePercentage;
         }
 
         protected override void CheckArea()

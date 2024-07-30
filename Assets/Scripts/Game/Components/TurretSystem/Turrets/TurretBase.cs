@@ -1,17 +1,21 @@
+using Scripts.Game.Components.TurretSystem.Scriptable;
 using UnityEngine;
 
-namespace Scripts.Game.Components.Turret
+namespace Scripts.Game.Components.TurretSystem.Turrets
 {
     public abstract class TurretBase : MonoBehaviour
     {
+        [SerializeField] protected TurretProperties _properties;
         protected float Damage;
         protected float Range;
+        protected float Cooldown;
         protected bool IsActive;
 
-        protected virtual void Initialize(float damage, float range)
+        protected virtual void Initialize()
         {
-            Damage = damage;
-            Range = range;
+            Damage = _properties.Damage;
+            Range = _properties.Range;
+            Cooldown = _properties.Cooldown;
         }
         protected abstract void Activate();
         protected abstract void CheckArea();

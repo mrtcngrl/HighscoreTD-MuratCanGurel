@@ -1,6 +1,8 @@
-namespace Scripts.Game.Components.Turret
+using UnityEngine;
+
+namespace Scripts.Game.Components.TurretSystem.Turrets
 {
-    public class Mine : TurretBase
+    public class Turret: TurretBase
     {
         protected override void Activate()
         {
@@ -15,6 +17,11 @@ namespace Scripts.Game.Components.Turret
         protected override void Fire()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void ButtonClicked()
+        {
+            Debug.LogError("ButtonClicked");
         }
     }
 }

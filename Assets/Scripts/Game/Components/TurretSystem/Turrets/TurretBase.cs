@@ -1,9 +1,11 @@
 using Scripts.Game.Components.TurretSystem.Scriptable;
+using Scripts.Game.Controllers;
+using Scripts.Helpers;
 using UnityEngine;
 
 namespace Scripts.Game.Components.TurretSystem.Turrets
 {
-    public abstract class TurretBase : MonoBehaviour
+    public abstract class TurretBase : MonoBehaviour, ISelectable
     {
         [SerializeField] protected TurretProperties _properties;
         protected float Damage;
@@ -28,8 +30,20 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
             IsActive = true;
             Activate();
         }
-        
-        
 
+
+        public Vector3 Position => transform.position;
+        public bool Available => !IsActive;
+        public void OnSelect()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void OnHold(Vector3 mouseWorldPos)
+        {
+            var candidatePosition = mouseWorldPos + Vector3.forward;
+            candidatePosition = candidatePosition.CopyWithY(1.5f);
+            transform.position = candidatePosition;
+        }
     }
 }

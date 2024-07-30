@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2295893a964c1e9636c59ea5894652, type: 3}
   m_Name: Mine
   m_EditorClassIdentifier: 
-  _turretID: 2
-  _prefab: {fileID: 0}
+  _id: 1
+  _prefab: {fileID: 2193019027901090601, guid: 1fd6fe1e37bd0814aa62ecccbe75df0d, type: 3}
   Damage: 0
   Range: 0
   Cooldown: 0

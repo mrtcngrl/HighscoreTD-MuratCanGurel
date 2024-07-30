@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2295893a964c1e9636c59ea5894652, type: 3}
   m_Name: Mortar
   m_EditorClassIdentifier: 
-  _turretID: 3
-  _prefab: {fileID: 0}
+  _id: 2
+  _prefab: {fileID: 7903951408088897664, guid: bf973f622616a264e861274f97daa2e6, type: 3}
   Damage: 0
   Range: 0
   Cooldown: 0

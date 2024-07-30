@@ -34,16 +34,17 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         public Vector3 Position => transform.position;
         public bool Available => !IsActive;
-        public void OnSelect()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public void OnHold(Vector3 mouseWorldPos)
         {
             var candidatePosition = mouseWorldPos + Vector3.forward;
             candidatePosition = candidatePosition.CopyWithY(1.5f);
             transform.position = candidatePosition;
+        }
+
+        public void OnRelease(out bool placed)
+        {
+            placed = false;
         }
     }
 }

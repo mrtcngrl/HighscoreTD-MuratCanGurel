@@ -46,7 +46,11 @@ namespace Scripts.Game.Controllers
         private void PressUp(Touch touch)
         {
             Debug.LogError("Pressed Up");
-            //_selectedItem = null;
+            if(_selectedItem == null) return;
+            _selectedItem.OnRelease(out bool placed);
+            if (placed)
+                _selectedItem = null;
+
         }
         
         private Vector3 MouseWorldPosition(Touch touch, Vector3 selectedCoinPos)
@@ -65,7 +69,7 @@ namespace Scripts.Game.Controllers
     {
         public Vector3 Position { get; }
         bool Available { get;}
-        void OnSelect();
         void OnHold(Vector3 mouseWorldPos);
+        void OnRelease(out bool placed);
     }
 }

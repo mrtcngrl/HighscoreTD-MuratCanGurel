@@ -1,6 +1,9 @@
+using System;
 using Scripts.Game.Components.TurretSystem.Scriptable;
+using Scripts.Game.Components.TurretSystem.TurretSlot;
 using Scripts.Game.Controllers;
 using Scripts.Helpers;
+using UniRx;
 using UnityEngine;
 
 namespace Scripts.Game.Components.TurretSystem.Turrets
@@ -12,6 +15,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
         protected float Range;
         protected float Cooldown;
         protected bool IsActive;
+        private IDisposable SearchRoutine;
 
         protected virtual void Initialize()
         {
@@ -19,7 +23,12 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
             Range = _properties.Range;
             Cooldown = _properties.Cooldown;
         }
-        protected abstract void Activate();
+
+        protected virtual void Activate()
+        {
+            SearchRoutine?.Dispose();
+            SearchRoutine = Observable.EveryUpdate().Subscribe(_=>CheckArea());
+        }
         protected abstract void CheckArea();
         protected abstract void Fire();
 
@@ -42,9 +51,14 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
             transform.position = candidatePosition;
         }
 
-        public void OnRelease(out bool placed)
+        public void OnRelease(Vector3 hitPoint, out bool placed)
         {
             placed = false;
+            var slot = SlotController.Instance.GetNearestAvailableSlot(hitPoint);
+            if(slot == null) return;
+            placed = true;
+            slot.PlaceTurret(this);
+            Activate();
         }
     }
 }

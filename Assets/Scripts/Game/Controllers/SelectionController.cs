@@ -45,9 +45,13 @@ namespace Scripts.Game.Controllers
         
         private void PressUp(Touch touch)
         {
-            Debug.LogError("Pressed Up");
             if(_selectedItem == null) return;
-            _selectedItem.OnRelease(out bool placed);
+            Vector3 hitPoint = Vector3.right * 100f;
+            Vector2 selectionCamPos = _camera.WorldToViewportPoint(_selectedItem.Position);
+            Ray ray = _camera.ViewportPointToRay(selectionCamPos);
+            if (Physics.Raycast(ray, out var hit, 100f, GameConstants.Ground))
+                hitPoint = hit.point;
+            _selectedItem.OnRelease(hitPoint ,out bool placed);
             if (placed)
                 _selectedItem = null;
 
@@ -70,6 +74,6 @@ namespace Scripts.Game.Controllers
         public Vector3 Position { get; }
         bool Available { get;}
         void OnHold(Vector3 mouseWorldPos);
-        void OnRelease(out bool placed);
+        void OnRelease(Vector3 hitPoint, out bool placed);
     }
 }

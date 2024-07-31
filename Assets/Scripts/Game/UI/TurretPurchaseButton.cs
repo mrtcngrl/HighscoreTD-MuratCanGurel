@@ -14,12 +14,13 @@ namespace Scripts.Game.UI
         [SerializeField] private TurretProperties _turretProperties;
         [SerializeField] private TextMeshProUGUI _priceText;
         private Spawner _spawner;
-        private GameObject testObj;
+        private SelectionController _selectionController;
         
         [Inject]
-        private void OnInject(Spawner spawner)
+        private void OnInject(Spawner spawner, SelectionController selectionController)
         {
             _spawner = spawner;
+            _selectionController = selectionController;
             Debug.LogError("Zenject test");
             //_button.onClick.AddListener(()=> _spawnController.SpawnTurretByID(_turretProperties.ID));
             _button.onClick.AddListener(Create);
@@ -27,7 +28,8 @@ namespace Scripts.Game.UI
 
         private void Create()
         {
-            Instantiate(_turretProperties.Prefab, Vector3.zero, Quaternion.identity);
+             ISelectable selectedObject = Instantiate(_turretProperties.Prefab, Vector3.zero, Quaternion.identity).GetComponent<ISelectable>();
+             _selectionController.SetSelectable(selectedObject);
         }
         private void OnDestroy()
         {

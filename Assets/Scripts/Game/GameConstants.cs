@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
 
 namespace Scripts.Game
 {
     public class GameConstants
     {
-        public static LayerMask SelectableLayer;
-        
+        public static LayerMask Selectable;
+        public static LayerMask Ground;
+        public static float MaxDistanceToPlace = 2f;
+        public static Action OnFirstTurretPlaced;
         public static void Initialize()
         {
-            SelectableLayer = 1 << LayerMask.NameToLayer("Selectable");
+            Ground = 1 << LayerMask.NameToLayer("Ground");
+            Selectable = 1 << LayerMask.NameToLayer("Selectable");
         }
     }
 }

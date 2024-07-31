@@ -1,32 +1,40 @@
 using System;
+using Game.Pool;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Scripts.Game.Controllers
 {
     public class EnemyController : MonoBehaviour
     {
         private IDisposable _enemySpawnCycle;
-        private float _delay = 3f;
-        private float _modifiedDelay;
+        private float _interval = 3f;
+        private float _modifiedInterval;
         private int _passedSeconds;
+        private Spawner _spawner;
         private void Awake()
         {
-            GameConstants.OnFirstTurretPlaced += StartGame;
+            GameConstants.OnFirstTurretPlaced += StartEnemyRush;
         }
 
+        [Inject]
+        private void OnInject(Spawner spawner)
+        {
+            _spawner = spawner;
+        }
 
         private void Update()
         {
             if(Input.GetKeyDown(KeyCode.A))
-                StartGame();
+                StartEnemyRush();
         }
 
-        private void StartGame()
+        private void StartEnemyRush()
         {
-            _modifiedDelay = _delay;
+            _modifiedInterval = _interval;
             _passedSeconds = 0;
-            SetSpawnCycle(_delay);
+            SetSpawnCycle(_interval);
         }
         private void SetSpawnCycle(float delay)
         {
@@ -39,9 +47,10 @@ namespace Scripts.Game.Controllers
             _enemySpawnCycle?.Dispose();
         }
 
-        public void Spawn()
+        private void Spawn()
         {
-            _passedSeconds += (int)_modifiedDelay;
+            _spawner.SpawnStickman();
+            _passedSeconds += (int)_modifiedInterval;
             Debug.Log("Spawned " + _passedSeconds);
             if (_passedSeconds >= 60)
             {
@@ -50,17 +59,17 @@ namespace Scripts.Game.Controllers
                 return;
             }
 
-            if (_passedSeconds >= 30 && _modifiedDelay >= 3f)
+            if (_passedSeconds >= 30 && _modifiedInterval >= 3f)
             {
                 Debug.LogError("modified 2");
-                _modifiedDelay = 2f;
-                SetSpawnCycle(_modifiedDelay);
+                _modifiedInterval = 2f;
+                SetSpawnCycle(_modifiedInterval);
             }
-            else if(_passedSeconds >= 45 && _modifiedDelay >= 2f)
+            else if(_passedSeconds >= 45 && _modifiedInterval >= 2f)
             {
                 Debug.LogError("modified 1");
-                _modifiedDelay = 1f;
-                SetSpawnCycle(_modifiedDelay);
+                _modifiedInterval = 1f;
+                SetSpawnCycle(_modifiedInterval);
             }
         }
     }

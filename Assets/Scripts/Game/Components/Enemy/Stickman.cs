@@ -9,7 +9,6 @@ namespace Scripts.Game.Components.Enemy
         private float _health;
         [SerializeField] private float _speed;
         [SerializeField] private float _damage;
-        
         public void Initialize(Vector3 targetPoint, float health, float damage)
         {
             

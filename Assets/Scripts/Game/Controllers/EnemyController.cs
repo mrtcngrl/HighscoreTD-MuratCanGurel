@@ -13,9 +13,20 @@ namespace Scripts.Game.Controllers
         private float _modifiedInterval;
         private int _passedSeconds;
         private Spawner _spawner;
+
         private void Awake()
         {
+            Subscribe();
+        }
+
+        private void Subscribe()
+        {
             GameConstants.OnFirstTurretPlaced += StartEnemyRush;
+        }
+        
+        private void Unsubscribe()
+        {
+            GameConstants.OnFirstTurretPlaced -= StartEnemyRush;
         }
 
         [Inject]
@@ -24,16 +35,16 @@ namespace Scripts.Game.Controllers
             _spawner = spawner;
         }
 
-        private void Update()
+        public void Reset()
         {
-            if(Input.GetKeyDown(KeyCode.A))
-                StartEnemyRush();
+            Subscribe();
+            _modifiedInterval = _interval;
+            _passedSeconds = 0;
         }
 
         private void StartEnemyRush()
         {
-            _modifiedInterval = _interval;
-            _passedSeconds = 0;
+            Unsubscribe();
             SetSpawnCycle(_interval);
         }
         private void SetSpawnCycle(float delay)

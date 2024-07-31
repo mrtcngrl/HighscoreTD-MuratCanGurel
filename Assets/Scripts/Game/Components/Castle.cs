@@ -11,7 +11,7 @@ namespace Scripts.Game.Components
         [Inject]
         private void OnInject()
         {
-            CastleDoor = (transform.position + Vector3.forward * 2f).CopyWithY(0);
+            CastleDoor = (transform.position + Vector3.forward * .5f).CopyWithY(0);
             if (!object.ReferenceEquals(Instance, null) && !object.ReferenceEquals(Instance, this)) this.Destroy();
             else
             {

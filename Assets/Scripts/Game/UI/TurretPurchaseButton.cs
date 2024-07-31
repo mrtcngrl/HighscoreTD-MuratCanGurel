@@ -15,7 +15,6 @@ namespace Scripts.Game.UI
         [SerializeField] private TextMeshProUGUI _priceText;
         private Spawner _spawner;
         private SelectionController _selectionController;
-        
         [Inject]
         private void OnInject(Spawner spawner, SelectionController selectionController)
         {

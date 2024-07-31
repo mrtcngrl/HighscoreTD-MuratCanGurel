@@ -11,7 +11,6 @@ namespace Scripts.Game.Components.Enemy
         [SerializeField] private float _damage;
         public void Initialize(Vector3 targetPoint, float health, float damage)
         {
-            
         }
         public void CacheAction(Action<Stickman> returnAction)
         {

@@ -26,6 +26,7 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
                 Instance = this;
             }
             Initialize();
+            GameConstants.OnSessionEnd += OnSessionEnd;
         }
         private void Initialize()
         {
@@ -57,6 +58,15 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
         public bool AnyEmptySlot()
         {
             return _slots.Any(s => s.Available);
+        }
+        
+        
+        private void OnSessionEnd()
+        {
+            foreach (var slot in _slots.Where(slot => !slot.Available))
+            {
+                slot.RemoveTurret();
+            }
         }
         
            

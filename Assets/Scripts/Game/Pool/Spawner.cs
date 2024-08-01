@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Scripts.Game;
 using Scripts.Game.Components;
 using Scripts.Game.Components.Enemy;
 using Scripts.Game.Components.TurretSystem.Projectiles;
@@ -29,6 +30,7 @@ namespace Game.Pool
             _bulletPool = new ObjectPool<Projectile>(_bulletPrefab);
             _stickmanPool = new ObjectPool<Stickman>(_enemyPrefab);
             _enemyController = enemyController;
+            GameConstants.OnSessionEnd += PushAll;
         }
 
         private void Start()
@@ -46,7 +48,13 @@ namespace Game.Pool
         public void SpawnStickman()
         {
             Stickman stickman = _stickmanPool.Pull(_enemySpawnTransform.position);
-            stickman.Initialize(stickmanTargetPoint,_enemyController.Health,10);
+            stickman.Initialize(stickmanTargetPoint,_enemyController.StartHealth,10);
+        }
+
+        private void PushAll()
+        {
+            _stickmanPool.PushAll();
+            _bulletPool.PushAll();
         }
     }
 }

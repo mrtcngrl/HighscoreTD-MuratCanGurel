@@ -1,4 +1,5 @@
 using Scripts.Game.Components.TurretSystem.Turrets;
+using Scripts.Helpers;
 using UnityEngine;
 
 namespace Scripts.Game.Components.TurretSystem.TurretSlot
@@ -25,6 +26,12 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
         {
             _turret = turret;
             _turret.transform.position = Position;
+        }
+
+        public void RemoveTurret()
+        {
+            _turret.gameObject.Destroy();
+            _turret = null;
         }
     }
 }

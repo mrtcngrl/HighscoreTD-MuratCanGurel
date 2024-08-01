@@ -7445,7 +7445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interval: 5
   _portalParticle: {fileID: 624163138}
-  _health: 100
+  _startHealth: 1000
 --- !u!1 &1767003416
 GameObject:
   m_ObjectHideFlags: 0
@@ -7781,7 +7781,7 @@ GameObject:
   - component: {fileID: 1947084673}
   - component: {fileID: 1947084672}
   m_Layer: 0
-  m_Name: ScorPopup
+  m_Name: ScorePopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

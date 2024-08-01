@@ -8,9 +8,9 @@ namespace Game.Pool
     {
         private Action<T> pullObject;
         private Action<T> pushObject;
-        private Stack<T> pooledObjects = new Stack<T>();
+        private Stack<T> pooledObjects = new();
         private GameObject prefab;
-        private List<T> spawnedObjects = new List<T>();
+        private List<T> spawnedObjects = new();
         private GameObject pooledObjectParent;
 
         public int spawnedCount

@@ -44,6 +44,12 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
             SearchRoutine = Observable.Timer(TimeSpan.FromSeconds(.1f)).Repeat().Subscribe(_=>CheckArea());
         }
 
+        protected void OnDestroy()
+        {
+            SearchRoutine?.Dispose();
+            FireRoutine?.Dispose();
+        }
+
         protected virtual void CheckArea()
         {
             var Colliders = Physics.OverlapSphere(transform.position, Range, GameConstants.Enemy).ToList();

@@ -2,6 +2,7 @@ using System;
 using Game.Pool;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Scripts.Game.Controllers
@@ -11,45 +12,41 @@ namespace Scripts.Game.Controllers
         private IDisposable _enemySpawnCycle;
         [SerializeField] private float _interval = 3f;
         [SerializeField] private ParticleSystem _portalParticle;
-        [SerializeField] private float _health;
+        [SerializeField] private float _startHealth;
+        private float _modifiedStartHealth;
         private float _modifiedInterval;
         private float _passedSeconds;
         private Spawner _spawner;
 
-        public float Health => _health;
-        private void Awake()
-        {
-            Subscribe();
-            _modifiedInterval = _interval;
-        }
+        public float StartHealth => _modifiedStartHealth;
 
         private void Subscribe()
         {
             GameConstants.OnFirstTurretPlaced += StartEnemyRush;
             GameConstants.OnEnemyDie += OnEnemyDie;
+            GameConstants.OnSessionEnd += Reset;
         }
         
-        private void Unsubscribe()
-        {
-            GameConstants.OnFirstTurretPlaced -= StartEnemyRush;
-        }
-
         [Inject]
         private void OnInject(Spawner spawner)
         {
             _spawner = spawner;
+            Subscribe();
+            _modifiedInterval = _interval;
+            _modifiedStartHealth = _startHealth;
         }
 
         public void Reset()
         {
-            Subscribe();
+            GameConstants.OnFirstTurretPlaced += StartEnemyRush;
             _modifiedInterval = _interval;
+            _enemySpawnCycle?.Dispose();
             _passedSeconds = 0;
         }
 
         private void StartEnemyRush()
         {
-            Unsubscribe();
+            GameConstants.OnFirstTurretPlaced -= StartEnemyRush;
             _portalParticle.Play();
             SetSpawnCycle(_interval);
         }
@@ -66,7 +63,7 @@ namespace Scripts.Game.Controllers
 
         private void OnEnemyDie()
         {
-            _health += 20;
+            _modifiedStartHealth += 20;
             if(_modifiedInterval <= .75f || _passedSeconds >= 60) return;
             _modifiedInterval -= .25f;
             SetSpawnCycle(_modifiedInterval);

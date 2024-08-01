@@ -9,7 +9,7 @@ namespace Scripts.Game.UI.Views
     {
         [SerializeField] private TextMeshProUGUI _coinText;
         [SerializeField] private TextMeshProUGUI _scoreText;
-
+        [SerializeField] private GameObject _scorePopup;
         [Inject]
         private void OnInject()
         {

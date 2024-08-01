@@ -26,7 +26,7 @@ namespace Scripts.Game.Controllers
         private void Start()
         {
             _slotController = SlotController.Instance;
-            GameConstants.CoinEarned?.Invoke(500);
+            GameConstants.CoinEarned?.Invoke(50);
         }
 
         public void AddTurret(TurretBase turret)

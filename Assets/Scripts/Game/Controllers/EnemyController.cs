@@ -66,8 +66,8 @@ namespace Scripts.Game.Controllers
 
         private void OnEnemyDie()
         {
-            _health += 10;
-            if(_modifiedInterval <= 1 || _passedSeconds >= 60) return;
+            _health += 20;
+            if(_modifiedInterval <= .75f || _passedSeconds >= 60) return;
             _modifiedInterval -= .25f;
             SetSpawnCycle(_modifiedInterval);
         }

@@ -9,7 +9,8 @@ namespace Scripts.Game.Controllers
     public class EnemyController : MonoBehaviour
     {
         private IDisposable _enemySpawnCycle;
-        private float _interval = 3f;
+        [SerializeField] private float _interval = 3f;
+        [SerializeField] private ParticleSystem _portalParticle;
         private float _modifiedInterval;
         private int _passedSeconds;
         private Spawner _spawner;
@@ -45,6 +46,7 @@ namespace Scripts.Game.Controllers
         private void StartEnemyRush()
         {
             Unsubscribe();
+            _portalParticle.Play();
             SetSpawnCycle(_interval);
         }
         private void SetSpawnCycle(float delay)
@@ -70,16 +72,16 @@ namespace Scripts.Game.Controllers
                 return;
             }
 
-            if (_passedSeconds >= 30 && _modifiedInterval >= 3f)
+            if (_passedSeconds >= 30 && _modifiedInterval >= 8f)
             {
                 Debug.LogError("modified 2");
-                _modifiedInterval = 2f;
+                _modifiedInterval = 5f;
                 SetSpawnCycle(_modifiedInterval);
             }
-            else if(_passedSeconds >= 45 && _modifiedInterval >= 2f)
+            else if(_passedSeconds >= 45 && _modifiedInterval >= 5f)
             {
                 Debug.LogError("modified 1");
-                _modifiedInterval = 1f;
+                _modifiedInterval = 3f;
                 SetSpawnCycle(_modifiedInterval);
             }
         }

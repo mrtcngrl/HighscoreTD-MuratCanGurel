@@ -43,7 +43,7 @@ namespace Game.Pool
         public void SpawnStickman()
         {
             Stickman stickman = _stickmanPool.Pull(_enemySpawnTransform.position);
-            stickman.Initialize(stickmanTargetPoint,100, 5);
+            stickman.Initialize(stickmanTargetPoint,100, 5, 10);
         }
     }
 }

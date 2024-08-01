@@ -10,6 +10,10 @@ namespace Scripts.Game
         public static LayerMask Enemy;
         public static float MaxDistanceToPlace = 2f;
         public static Action OnFirstTurretPlaced;
+        public static Action<int> CoinEarned;
+        public static Action<int> CoinAmountChanged;
+        public static Action<int> ScoreEarned;
+        public static Action<int> ScoreChaged;
         public static void Initialize()
         {
             Ground = 1 << LayerMask.NameToLayer("Ground");

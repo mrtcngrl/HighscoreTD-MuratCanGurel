@@ -21,9 +21,11 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
         protected float Cooldown;
         protected bool IsActive;
         protected IDisposable SearchRoutine;
-        private IDisposable FireRoutine;
+        protected IDisposable FireRoutine;
         protected IHittable ClosestTarget;
         protected Spawner Spawner;
+        protected bool HasTimer;
+        private bool _isPlaced;
 
         protected virtual void Initialize()
         {
@@ -36,16 +38,14 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         protected virtual void Activate()
         {
+            HasTimer = false;
             Initialize();
             SearchRoutine?.Dispose();
             SearchRoutine = Observable.Timer(TimeSpan.FromSeconds(.1f)).Repeat().Subscribe(_=>CheckArea());
-            FireRoutine?.Dispose();
-            FireRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Repeat().Subscribe(_=>Fire());
         }
 
         protected virtual void CheckArea()
         {
-            Debug.LogError("Checking..1");
             var Colliders = Physics.OverlapSphere(transform.position, Range, GameConstants.Enemy).ToList();
             float closestDistanceSqr = Mathf.Infinity;
             Collider targetCollider = null;
@@ -60,16 +60,25 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
                 }
                 ClosestTarget = targetCollider.attachedRigidbody?.GetComponent<IHittable>();
             }
+
+            TryToFire();
             
         }
 
-
+        protected virtual void TryToFire()
+        {
+            if (ClosestTarget != null && !HasTimer)
+            {
+                Fire();
+                FireRoutine?.Dispose();
+                HasTimer = true;
+                FireRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Subscribe(_=>HasTimer = false);
+            }
+        }
         protected abstract void Fire();
         
-        
-
         public Vector3 Position => transform.position;
-        public bool Available => !IsActive;
+        public bool Available => !_isPlaced;
         
         public void OnHold(Vector3 mouseWorldPos)
         {
@@ -80,12 +89,13 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         public void OnRelease(Vector3 hitPoint, out bool placed)
         {
-            placed = false;
+            _isPlaced = placed = false;
             var slot = SlotController.Instance.GetNearestAvailableSlot(hitPoint);
             if(slot == null) return;
-            placed = true;
+            _isPlaced = placed = true;
             slot.PlaceTurret(this);
             Activate();
+            CheckArea();
             GameConstants.OnFirstTurretPlaced?.Invoke();
         }
         

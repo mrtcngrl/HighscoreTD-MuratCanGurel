@@ -37,9 +37,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
                 }
                 ClosestTarget = targetCollider.attachedRigidbody?.GetComponent<IHittable>();
             }
-
-            if (ClosestTarget != null)
-                Fire();
+            TryToFire();
         }
 
         private void Update()
@@ -55,7 +53,6 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         protected override void Fire()
         {
-            ;
             if (ClosestTarget != null)
             {
                 var bullet = Spawner.SpawnProjectile(Muzzle.position);

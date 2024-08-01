@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Scripts.Helpers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -51,6 +52,11 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
                 }
             }
             return closestDistanceSqr <= GameConstants.MaxDistanceToPlace ? bestTarget : null; 
+        }
+
+        public bool AnyEmptySlot()
+        {
+            return _slots.Any(s => s.Available);
         }
         
            

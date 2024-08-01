@@ -8,17 +8,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
     {
         [SerializeField] private Transform _head;
         [SerializeField] private float _anglePerSecond;
-        protected override void Activate()
-        {
-           base.Activate();
-        }
-
-        protected override void CheckArea()
-        {
-            base.CheckArea();
-            if (ClosestTarget != null)
-                Fire();
-        }
+        
 
         private void Update()
         {
@@ -33,11 +23,9 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         protected override void Fire()
         {
-            if (ClosestTarget != null)
-            {
-                var bullet = Spawner.SpawnProjectile(Muzzle.position);
-                bullet.Launch(ProjectileType.Bullet, ClosestTarget.Transform.position, Damage);
-            }
+            if (ClosestTarget == null) return;
+            var bullet = Spawner.SpawnProjectile(Muzzle.position);
+            bullet.Launch(ProjectileType.Bullet, ClosestTarget.Transform.position, Damage);
         }
         
     }

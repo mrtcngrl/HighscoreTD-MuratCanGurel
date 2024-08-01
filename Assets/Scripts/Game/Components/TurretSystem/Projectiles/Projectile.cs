@@ -65,6 +65,7 @@ namespace Scripts.Game.Components.TurretSystem.Projectiles
                     DisposeAndSetLifeTimer(_lifeTime);
                     break;
                 case ProjectileType.Mine:
+                    _rb.isKinematic = true;
                     _transform.DOJump(targetPosition.CopyWithY(.1f), 2f, 1, 1f);
                     break;
                 case ProjectileType.Mortar:

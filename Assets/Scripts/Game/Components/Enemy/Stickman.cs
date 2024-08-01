@@ -11,7 +11,6 @@ namespace Scripts.Game.Components.Enemy
     {
         private float _health;
         [SerializeField] private float _speed;
-        [SerializeField] private float _damage;
         [SerializeField] private int _price;
         [SerializeField] private Transform _transform;
         [SerializeField] private GameObject _model;
@@ -24,11 +23,10 @@ namespace Scripts.Game.Components.Enemy
             _transform = transform;
         }
 
-        public void Initialize(Vector3 targetPoint, float health, float damage, int price)
+        public void Initialize(Vector3 targetPoint, float health, int price)
         {
             _price = price;
             _health = health;
-            _damage = damage;
             float duration = Vector3.Distance(_transform.position, targetPoint) / _speed;
             _walkTween = _transform.DOMove(targetPoint, duration).SetEase(Ease.Linear).OnComplete(Explode);
         }
@@ -37,6 +35,7 @@ namespace Scripts.Game.Components.Enemy
 
         public void OnHit(float damage)
         {
+            Debug.LogError(_health+" "+damage);
             _health -= damage;
             if(_health <= 0)
                 Die();
@@ -50,6 +49,7 @@ namespace Scripts.Game.Components.Enemy
             returnTimer = Observable.Timer(TimeSpan.FromSeconds(1)).Subscribe(_=>ReturnToPool());
             GameConstants.CoinEarned?.Invoke(_price);
             GameConstants.ScoreEarned?.Invoke(100);
+            GameConstants.OnEnemyDie?.Invoke();
         }
         private void Explode()
         {

@@ -10,6 +10,7 @@ namespace Scripts.Game
         public static LayerMask Enemy;
         public static float MaxDistanceToPlace = 2f;
         public static Action OnFirstTurretPlaced;
+        public static Action OnEnemyDie;
         public static Action<int> CoinEarned;
         public static Action<int> CoinAmountChanged;
         public static Action<int> ScoreEarned;

@@ -16,4 +16,4 @@ MonoBehaviour:
   _prefab: {fileID: 7608292823707385864, guid: 6c249278c56a8574fb7217c8679d4c44, type: 3}
   Damage: 50
   Range: 5
-  Cooldown: 10
+  Cooldown: 5

@@ -12,6 +12,7 @@ namespace Scripts.Game.Installers
             Container.Bind<SelectionController>().AsSingle().NonLazy();
             Container.Bind<UserProgressData>().AsSingle().NonLazy();
             Container.Bind<Spawner>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<EnemyController>().FromComponentInHierarchy().AsSingle();
             GameConstants.Initialize();
         }
     }

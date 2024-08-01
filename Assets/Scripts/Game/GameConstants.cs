@@ -15,6 +15,7 @@ namespace Scripts.Game
         public static Action<int> CoinAmountChanged;
         public static Action<int> ScoreEarned;
         public static Action<int> ScoreChaged;
+        public static Action OnSessionEnd;
         public static void Initialize()
         {
             Ground = 1 << LayerMask.NameToLayer("Ground");

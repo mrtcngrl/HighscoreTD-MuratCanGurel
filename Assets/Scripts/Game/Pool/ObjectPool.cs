@@ -52,10 +52,9 @@ namespace Game.Pool
             }
 
             t.gameObject.name = prefab.name;
-            t.gameObject.SetActive(true); //ensure the object is on
+            t.gameObject.SetActive(true);
             t.transform.parent = pooledObjectParent.transform;
             t.CacheAction(Push);
-            //allow default behavior and turning object back on
             pullObject?.Invoke(t);
 
             return t;
@@ -108,7 +107,6 @@ namespace Game.Pool
         public void Push(T t)
         {
             pooledObjects.Push(t);
-            //create default behavior to turn off objects
             pushObject?.Invoke(t);
             t.transform.parent = pooledObjectParent.transform;
             t.gameObject.SetActive(false);

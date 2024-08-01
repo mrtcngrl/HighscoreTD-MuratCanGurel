@@ -28,7 +28,7 @@ namespace Scripts.Game.Components.Enemy
             _price = price;
             _health = health;
             float duration = Vector3.Distance(_transform.position, targetPoint) / _speed;
-            _walkTween = _transform.DOMove(targetPoint, duration).SetEase(Ease.Linear).OnComplete(Explode);
+            _walkTween = _transform.DOMove(targetPoint, duration).SetEase(Ease.Linear).OnComplete(OnCastleReached);
         }
 
         public Transform Transform => _transform;
@@ -51,9 +51,10 @@ namespace Scripts.Game.Components.Enemy
             GameConstants.ScoreEarned?.Invoke(100);
             GameConstants.OnEnemyDie?.Invoke();
         }
-        private void Explode()
+        private void OnCastleReached()
         {
             ReturnToPool();
+            GameConstants.OnSessionEnd?.Invoke();
         }
         public void CacheAction(Action<Stickman> returnAction)
         {

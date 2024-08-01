@@ -3,11 +3,12 @@ using UnityEngine;
 
 namespace Scripts.Game
 {
-    public class GameConstants
+    public static class GameConstants
     {
+        public const int StartCoinAmount = 50;
         public static LayerMask Ground;
         public static LayerMask Enemy;
-        public static float MaxDistanceToPlace = 2f;
+        public const float MaxDistanceToPlace = 2f;
         public static Action OnFirstTurretPlaced;
         public static Action OnEnemyDie;
         public static Action<int> CoinEarned;

@@ -30,5 +30,16 @@ namespace Scripts.User
             score += amount;
             GameConstants.ScoreChaged?.Invoke(score);
         }
+
+        public void SetCoinAmount(int amount)
+        {
+            coinAmount = amount;
+            GameConstants.CoinAmountChanged?.Invoke(coinAmount);
+        }
+        public void SetScore(int amount)
+        {
+            score = amount;
+            GameConstants.ScoreChaged?.Invoke(score);
+        }
     }
 }

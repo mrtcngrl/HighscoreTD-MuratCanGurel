@@ -40,8 +40,10 @@ namespace Scripts.Game.Controllers
         {
             GameConstants.OnFirstTurretPlaced += StartEnemyRush;
             _modifiedInterval = _interval;
+            _modifiedStartHealth = _startHealth;
             _enemySpawnCycle?.Dispose();
             _passedSeconds = 0;
+            _portalParticle.Stop();
         }
 
         private void StartEnemyRush()

@@ -40,6 +40,7 @@ namespace Scripts.Game.UI.Views
         {
             HidePopup();
             _retryButton.interactable = false;
+            GameConstants.OnRetry?.Invoke();
         }
     }
 }

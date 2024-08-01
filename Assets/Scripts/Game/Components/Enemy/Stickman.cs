@@ -53,8 +53,9 @@ namespace Scripts.Game.Components.Enemy
         }
         private void OnCastleReached()
         {
-            ReturnToPool();
             GameConstants.OnSessionEnd?.Invoke();
+            ReturnToPool();
+            
         }
         public void CacheAction(Action<Stickman> returnAction)
         {
@@ -65,6 +66,7 @@ namespace Scripts.Game.Components.Enemy
 
         public void ReturnToPool()
         {
+            _walkTween?.Kill();
             _returnAction?.Invoke(this);
         }
     }

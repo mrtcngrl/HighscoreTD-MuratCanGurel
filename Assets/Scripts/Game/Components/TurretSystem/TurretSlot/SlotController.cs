@@ -27,9 +27,12 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
             }
             Initialize();
             GameConstants.OnSessionEnd += OnSessionEnd;
+            GameConstants.OnRetry += Initialize;
+            
         }
         private void Initialize()
         {
+            _slots.Clear();
             for (int i = 0; i < _slotCount; i++)
             {
                 _slots.Add(new Slot(i+1, true, _slotPositions[i]));

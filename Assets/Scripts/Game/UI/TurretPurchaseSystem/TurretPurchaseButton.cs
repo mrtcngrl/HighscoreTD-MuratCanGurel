@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Scripts.Game.UI
+namespace Scripts.Game.UI.TurretPurchaseSystem
 {
     public class TurretPurchaseButton : MonoBehaviour
     {
@@ -18,6 +18,7 @@ namespace Scripts.Game.UI
         [SerializeField] private TextMeshProUGUI _priceText;
         private SelectionController _selectionController;
         private UserProgressData _userProgressData;
+        public TurretProperties TurretProperties => _turretProperties;
         [Inject]
         private void OnInject(Spawner spawner, SelectionController selectionController, UserProgressData userProgressData)
         {

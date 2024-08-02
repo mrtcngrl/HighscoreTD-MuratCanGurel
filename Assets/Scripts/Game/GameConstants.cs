@@ -19,8 +19,6 @@ namespace Scripts.Game
         public static Action<int> ScoreChaged;
         public static Action OnSessionEnd;
         public static Action OnRetry;
-        public static Action OnBoosterUsed;
-        public static Action OnBoosterEnd;
         public static void Initialize()
         {
             Ground = 1 << LayerMask.NameToLayer("Ground");

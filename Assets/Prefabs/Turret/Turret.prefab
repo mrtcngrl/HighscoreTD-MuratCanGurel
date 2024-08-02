@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933acdfa8c134024a93261a42b894d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _properties: {fileID: 11400000, guid: feba6841180d1754ba2658f9f1b399fb, type: 2}
+  Properties: {fileID: 11400000, guid: feba6841180d1754ba2658f9f1b399fb, type: 2}
   Muzzle: {fileID: 4725385624721296063}
   _head: {fileID: 5489567232331447663}
   _anglePerSecond: 200

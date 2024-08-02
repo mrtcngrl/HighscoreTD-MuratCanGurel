@@ -5,7 +5,9 @@ namespace Scripts.Game
 {
     public static class GameConstants
     {
-        public const int StartCoinAmount = 50;
+        public const int StartCoinAmount = 500;
+        public const float BoosterIncreasePercent = .1f;
+        public const float BoosterDuration = 5f;
         public static LayerMask Ground;
         public static LayerMask Enemy;
         public const float MaxDistanceToPlace = 2f;
@@ -17,6 +19,8 @@ namespace Scripts.Game
         public static Action<int> ScoreChaged;
         public static Action OnSessionEnd;
         public static Action OnRetry;
+        public static Action OnBoosterUsed;
+        public static Action OnBoosterEnd;
         public static void Initialize()
         {
             Ground = 1 << LayerMask.NameToLayer("Ground");

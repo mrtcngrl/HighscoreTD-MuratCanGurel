@@ -2,6 +2,7 @@ using System;
 using Scripts.Game.Components.TurretSystem.Projectiles;
 using Scripts.Helpers;
 using UniRx;
+using UnityEngine;
 
 namespace Scripts.Game.Components.TurretSystem.Turrets
 {
@@ -12,6 +13,14 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
         protected override void Activate()
         {
             base.Initialize();
+            SearchRoutine?.Dispose();
+            SearchRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Repeat().Subscribe(_=>CheckArea());
+        }
+
+        public override void OnBoosterValueChange(bool isBoost)
+        {
+            Debug.LogError("Offf");
+            Cooldown = isBoost ? Cooldown / 2f : Properties.Cooldown;
             SearchRoutine?.Dispose();
             SearchRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Repeat().Subscribe(_=>CheckArea());
         }

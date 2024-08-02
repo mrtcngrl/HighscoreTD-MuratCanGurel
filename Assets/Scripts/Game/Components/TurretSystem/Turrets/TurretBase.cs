@@ -9,12 +9,13 @@ using Scripts.Game.Controllers;
 using Scripts.Helpers;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Scripts.Game.Components.TurretSystem.Turrets
 {
     public abstract class TurretBase : MonoBehaviour, ISelectable
     {
-        [SerializeField] protected TurretProperties _properties;
+        [SerializeField] protected TurretProperties Properties;
         [SerializeField] protected Transform Muzzle;
         protected float Damage;
         protected float Range;
@@ -27,13 +28,18 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
         protected bool HasTimer;
         private bool _isPlaced;
 
+        protected virtual void Awake()
+        {
+            GameController.BoosterActive.Subscribe(OnBoosterValueChange);
+        }
+
         protected virtual void Initialize()
         {
             Spawner = Spawner.Instance;
             IsActive = true;
-            Damage = _properties.Damage;
-            Range = _properties.Range;
-            Cooldown = _properties.Cooldown;
+            Damage = Properties.Damage;
+            Range = Properties.Range;
+            Cooldown = Properties.Cooldown;
         }
 
         protected virtual void Activate()
@@ -80,6 +86,14 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
                 HasTimer = true;
                 FireRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Subscribe(_=>HasTimer = false);
             }
+        }
+        public virtual void OnBoosterValueChange(bool isBoost)
+        {
+            Debug.LogError("Offf");
+            Cooldown = isBoost ? Cooldown / 2f : Properties.Cooldown;
+            HasTimer = false;
+            FireRoutine?.Dispose();
+            FireRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Subscribe(_=>HasTimer = false);
         }
         protected abstract void Fire();
         

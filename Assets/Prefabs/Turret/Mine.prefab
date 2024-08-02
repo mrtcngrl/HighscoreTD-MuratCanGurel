@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 651552fd845884e45a421e4e78042fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _properties: {fileID: 11400000, guid: f29e410acf827df4b97577fa14452911, type: 2}
+  Properties: {fileID: 11400000, guid: f29e410acf827df4b97577fa14452911, type: 2}
   Muzzle: {fileID: 7823113048481700485}
 --- !u!1001 &18753935547948653
 PrefabInstance:

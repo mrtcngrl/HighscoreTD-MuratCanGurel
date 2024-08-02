@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 1
   _prefab: {fileID: 7608292823707385864, guid: 6c249278c56a8574fb7217c8679d4c44, type: 3}
-  Damage: 50
+  Damage: 1000
   Range: 5
   Cooldown: 5

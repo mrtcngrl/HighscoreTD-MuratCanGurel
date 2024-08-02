@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c1124d0e4aa4503a32a6505bfa11d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _properties: {fileID: 11400000, guid: f5c2c31e7b06f8a4eb0ee00265636832, type: 2}
+  Properties: {fileID: 11400000, guid: f5c2c31e7b06f8a4eb0ee00265636832, type: 2}
   Muzzle: {fileID: 4935696112055962758}
   _head: {fileID: 3696302050291952633}
   _anglePerSecond: 200

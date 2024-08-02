@@ -4,6 +4,7 @@ using Scripts.Game.Components.TurretSystem.Turrets;
 using Scripts.Game.Components.TurretSystem.TurretSlot;
 using Scripts.Helpers;
 using Scripts.User;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +17,7 @@ namespace Scripts.Game.Controllers
         private SlotController _slotController;
         public static GameController Instance;
         private UserProgressData _userProgressData;
+        public static ReactiveProperty<bool> BoosterActive = new();
         [Inject]
         private void OnInject(UserProgressData userProgressData)
         {
@@ -26,6 +28,7 @@ namespace Scripts.Game.Controllers
             }
             _userProgressData = userProgressData;
             GameConstants.OnRetry += Initialize;
+            BoosterActive.Value = false;
         }
         private void Start()
         {

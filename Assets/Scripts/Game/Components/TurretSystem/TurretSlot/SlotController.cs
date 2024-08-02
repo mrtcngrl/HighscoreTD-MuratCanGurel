@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Scripts.Helpers;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -15,8 +16,6 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
         [SerializeField] private int _slotCount;
         public static SlotController Instance;
         private List<Slot> _slots = new();
-
-
         [Inject]
         private void OnInject()
         {
@@ -28,7 +27,6 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
             Initialize();
             GameConstants.OnSessionEnd += OnSessionEnd;
             GameConstants.OnRetry += Initialize;
-            
         }
         private void Initialize()
         {
@@ -72,7 +70,6 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
             }
         }
         
-           
 #if UNITY_EDITOR
         [SerializeField] private float radius = 5f;
         [SerializeField] private float padding = 1f;

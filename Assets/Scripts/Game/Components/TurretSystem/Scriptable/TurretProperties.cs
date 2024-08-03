@@ -10,12 +10,14 @@ namespace Scripts.Game.Components.TurretSystem.Scriptable
         [SerializeField] private int _id;
         [SerializeField] private int _startPrice;
         [SerializeField] private GameObject _prefab;
+        [SerializeField] private int _priceIncreaseAmount;
         public float Damage;
         public float Range;
         public float Cooldown;
-        public float CurrentPrice;
-        public float StartPrice => _startPrice;
+        
+        public int StartPrice => _startPrice;
         public int ID => _id;
         public GameObject Prefab => _prefab;
+        public int PriceIncreaseAmount => _priceIncreaseAmount;
     }
 }

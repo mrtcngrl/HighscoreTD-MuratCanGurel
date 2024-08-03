@@ -27,6 +27,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
         protected Spawner Spawner;
         protected bool HasTimer;
         private bool _isPlaced;
+        public int ID => Properties.ID;
 
         protected virtual void Awake()
         {
@@ -117,6 +118,13 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
             Activate();
             CheckArea();
             GameConstants.OnFirstTurretPlaced?.Invoke();
+        }
+
+        public void LoadPlace()
+        {
+            Activate();
+            CheckArea();
+            _isPlaced = true;
         }
         
         private void OnDrawGizmos()

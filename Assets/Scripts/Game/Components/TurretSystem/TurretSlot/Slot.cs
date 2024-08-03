@@ -13,7 +13,7 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
         public int ID => _id;
         public bool Available => _turret == null;
         public Vector3 Position => _position;
-        
+        public TurretBase Turret => _turret;
         public Slot(int id , bool available, Vector3 position, TurretBase turret = null)
         {
             _id = id;
@@ -26,6 +26,7 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
         {
             _turret = turret;
             _turret.transform.position = Position;
+            SlotController.Instance.SaveSlotData(this);
         }
 
         public void RemoveTurret()

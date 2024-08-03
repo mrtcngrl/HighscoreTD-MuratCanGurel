@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Mortar
   m_EditorClassIdentifier: 
   _id: 2
+  _startPrice: 60
   _prefab: {fileID: 7903951408088897664, guid: bf973f622616a264e861274f97daa2e6, type: 3}
-  Damage: 1000
+  _priceIncreaseAmount: 40
+  Damage: 20
   Range: 2
   Cooldown: 3.5

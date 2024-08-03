@@ -1,4 +1,5 @@
 using System;
+using Scripts.User;
 using UnityEngine;
 
 namespace Scripts.Game
@@ -16,7 +17,9 @@ namespace Scripts.Game
         public static Action<int> CoinEarned;
         public static Action<int> CoinAmountChanged;
         public static Action<int> ScoreEarned;
-        public static Action<int> ScoreChaged;
+        public static Action<int> ScoreChanged;
+        public static Action<UserProgressData> OnDataRecover;
+        public static Action OnDataLoad;
         public static Action OnSessionEnd;
         public static Action OnRetry;
         public static void Initialize()

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "246772098548",
+    "firebase_url": "https://highscoretd-muratcangurel-default-rtdb.firebaseio.com",
+    "project_id": "highscoretd-muratcangurel",
+    "storage_bucket": "highscoretd-muratcangurel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246772098548:android:7c0e66505378f406f145a1",
+        "android_client_info": {
+          "package_name": "com.midasgames.highscoretd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ1Y5GeX1R5UByGQaVc382VMcm_QHXiLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246772098548:android:5ce47581aaa7ab4bf145a1",
+        "android_client_info": {
+          "package_name": "com.test.comp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ1Y5GeX1R5UByGQaVc382VMcm_QHXiLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

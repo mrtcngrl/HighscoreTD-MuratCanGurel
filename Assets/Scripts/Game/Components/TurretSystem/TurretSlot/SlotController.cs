@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Scripts.Game.Controllers;
 using Scripts.Helpers;
+using Scripts.User;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
@@ -16,9 +18,11 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
         [SerializeField] private int _slotCount;
         public static SlotController Instance;
         private List<Slot> _slots = new();
+        private UserProgressData _progress;
         [Inject]
-        private void OnInject()
+        private void OnInject(UserProgressDataManager userProgressDataManager)
         {
+            _progress = userProgressDataManager.Progress;
             if (!object.ReferenceEquals(Instance, null) && !object.ReferenceEquals(Instance, this)) this.Destroy();
             else
             {
@@ -27,6 +31,7 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
             Initialize();
             GameConstants.OnSessionEnd += OnSessionEnd;
             GameConstants.OnRetry += Initialize;
+            GameConstants.OnDataRecover += OnDataRecover;
         }
         private void Initialize()
         {
@@ -69,7 +74,26 @@ namespace Scripts.Game.Components.TurretSystem.TurretSlot
                 slot.RemoveTurret();
             }
         }
-        
+        public void SaveSlotData(Slot slot)
+        {
+            _progress.SlotData.SlotInfos.Add(new SlotInfo()
+            {
+                HasTurret = true,
+                ID = slot.ID,
+                TurretID = slot.Turret.ID
+            });
+        }
+
+        private void OnDataRecover(UserProgressData progress)
+        {
+            foreach (var slotDataSlotInfo in progress.SlotData.SlotInfos)
+            {
+                var slot = _slots[slotDataSlotInfo.ID - 1];
+                var turret = GameController.Instance.CreateTurret(slotDataSlotInfo.TurretID);
+                slot.PlaceTurret(turret);
+                turret.LoadPlace();
+            }
+        }
 #if UNITY_EDITOR
         [SerializeField] private float radius = 5f;
         [SerializeField] private float padding = 1f;

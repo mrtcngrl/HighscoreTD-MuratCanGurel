@@ -1,6 +1,8 @@
 using System;
 using DG.Tweening;
 using Scripts.Game.Controllers;
+using Scripts.Game.UI.Popup;
+using Scripts.User;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -14,19 +16,23 @@ namespace Scripts.Game.UI.Views
         [SerializeField] private TextMeshProUGUI _coinText;
         [SerializeField] private TextMeshProUGUI _scoreText;
         [SerializeField] private ScorePopup _scorePopup;
+        [SerializeField] private RecoverPopup _recoverPopup;
         [SerializeField] private Image _boosterProgressImage;
         [SerializeField] private Button _boosterButton;
         private Tween _fillerTween;
         private float _fillAmount;
         private Sequence _pulseAnim;
         private IDisposable _boosterTimer;
+        private UserProgressData _userProgressData;
         [Inject]
-        private void OnInject()
+        private void OnInject(UserProgressDataManager userProgressDataManager)
         {
+            _userProgressData = userProgressDataManager.Progress;
             GameConstants.CoinAmountChanged += OnCoinAmountChanged;
-            GameConstants.ScoreChaged += OnScoreChanged;
+            GameConstants.ScoreChanged += OnScoreChanged;
             GameConstants.OnSessionEnd += OnSessionEnd;
             GameConstants.OnEnemyDie += FillBooster;
+            GameConstants.OnDataLoad += FillBooster;
             _pulseAnim = DOTween.Sequence()
                 .Append(_boosterButton.transform.DOScale(1.2f, 0.2f))
                 .Append(_boosterButton.transform.DOScale(1f, 0.2f)).SetAutoKill(false);
@@ -38,7 +44,7 @@ namespace Scripts.Game.UI.Views
         private void OnDestroy()
         {
             GameConstants.CoinAmountChanged -= OnCoinAmountChanged;
-            GameConstants.ScoreChaged -= OnScoreChanged;
+            GameConstants.ScoreChanged -= OnScoreChanged;
             GameConstants.OnSessionEnd -= OnSessionEnd;
         }
 
@@ -104,6 +110,7 @@ namespace Scripts.Game.UI.Views
             _boosterProgressImage.fillAmount = 0;
             _scorePopup.ShowPopup();
             _boosterTimer?.Dispose();
+            _userProgressData.HasValue = false;
         }
     }
 }

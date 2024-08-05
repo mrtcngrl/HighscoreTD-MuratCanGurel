@@ -37,7 +37,6 @@ namespace Scripts.Game.Controllers
         
         private void SaveProgressData()
         {
-            Debug.LogError("Try To save");
             string json = JsonUtility.ToJson(_userProgressDataManager.Progress);
             _dbReference.Child("users").Child(_userId).SetRawJsonValueAsync(json);
         }

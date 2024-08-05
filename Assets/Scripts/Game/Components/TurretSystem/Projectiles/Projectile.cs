@@ -23,7 +23,8 @@ namespace Scripts.Game.Components.TurretSystem.Projectiles
             public float Speed;
             public float LifeTime;
         }
-
+        public ProjectileType ProjectileType =>
+            _currentProjectile?.ProjectileType ?? ProjectileType.None;
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private float _lifeTime;
         [SerializeField] private List<ProjectileInfo> _projectilesInfo = new();

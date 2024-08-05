@@ -22,8 +22,21 @@ namespace Scripts.Game.UI.TurretPurchaseSystem
             }
 
             GameConstants.OnDataRecover += OnDataRecover;
+            GameConstants.OnRetry += OnRetry;
         }
 
+        private void OnRetry()
+        {
+            foreach (var turretPurchaseButton in _purchaseButtons)
+            { 
+                turretPurchaseButton.Initialize(turretPurchaseButton.TurretProperties.StartPrice, OnPurchased);
+            }
+
+            foreach (var purchaseProgress in _userProgressDataManager.Progress.PurchaseProgressData.PurchaseProgresses)
+            {
+                purchaseProgress.PurchaseStep = 0;
+            }
+        }
         private void OnDestroy()
         {
             GameConstants.OnDataRecover -= OnDataRecover;

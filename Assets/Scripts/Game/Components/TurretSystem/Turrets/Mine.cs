@@ -9,7 +9,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
     public class Mine : TurretBase
     {
         private Projectile _currentMine;
-
+        
         protected override void Activate()
         {
             base.Initialize();
@@ -19,7 +19,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         public override void OnBoosterValueChange(bool isBoost)
         {
-            Debug.LogError("Offf");
+            
             Cooldown = isBoost ? Cooldown / 2f : Properties.Cooldown;
             SearchRoutine?.Dispose();
             SearchRoutine = Observable.Timer(TimeSpan.FromSeconds(Cooldown)).Repeat().Subscribe(_=>CheckArea());
@@ -27,7 +27,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         protected override void CheckArea()
         {
-            if(_currentMine == null || !_currentMine.gameObject.activeInHierarchy)
+            if(_currentMine == null || !_currentMine.gameObject.activeInHierarchy || _currentMine.ProjectileType != ProjectileType.Mine)
                 Fire();
         }
 

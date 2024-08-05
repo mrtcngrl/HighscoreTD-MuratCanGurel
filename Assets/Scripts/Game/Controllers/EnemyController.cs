@@ -3,7 +3,6 @@ using Game.Pool;
 using Scripts.User;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Scripts.Game.Controllers
@@ -11,8 +10,8 @@ namespace Scripts.Game.Controllers
     public class EnemyController : MonoBehaviour
     {
         private IDisposable _enemySpawnCycle;
-        [SerializeField] private float _interval = 3f;
-        [SerializeField] private float _minInterval = 1f;
+        [SerializeField] private float _interval;
+        [SerializeField] private float _minInterval;
         [SerializeField] private ParticleSystem _portalParticle;
         [SerializeField] private float _startHealth;
         private float _modifiedStartHealth;
@@ -20,6 +19,7 @@ namespace Scripts.Game.Controllers
         private float _passedSeconds;
         private Spawner _spawner;
         private UserProgressData _userProgressData;
+        private int _killedEnemyCount;
 
         public float StartHealth => _modifiedStartHealth;
 
@@ -27,7 +27,7 @@ namespace Scripts.Game.Controllers
         {
             GameConstants.OnFirstTurretPlaced += StartEnemyRush;
             GameConstants.OnEnemyDie += OnEnemyDie;
-            GameConstants.OnSessionEnd += Reset;
+            GameConstants.OnSessionEnd += OnRetry;
             GameConstants.OnDataRecover += OnDataRecover;
         }
         
@@ -41,13 +41,14 @@ namespace Scripts.Game.Controllers
             _userProgressData.SpawnInterval = _modifiedStartHealth = _startHealth;
         }
 
-        public void Reset()
+        private void OnRetry()
         {
             GameConstants.OnFirstTurretPlaced += StartEnemyRush;
             _modifiedInterval = _interval;
             _modifiedStartHealth = _startHealth;
             _enemySpawnCycle?.Dispose();
             _passedSeconds = 0;
+            _killedEnemyCount = 0;
             _portalParticle.Stop();
         }
 
@@ -60,6 +61,7 @@ namespace Scripts.Game.Controllers
         }
         private void SetSpawnCycle(float delay)
         {
+            //todo make async and wait for last cycle
             _enemySpawnCycle?.Dispose();
             _enemySpawnCycle = Observable.Timer(TimeSpan.FromSeconds(delay)).Repeat().Subscribe(_ => Spawn());
         }
@@ -71,33 +73,37 @@ namespace Scripts.Game.Controllers
 
         private void OnEnemyDie()
         {
-            _modifiedStartHealth += 20;
+            _modifiedStartHealth += 5;
             _userProgressData.EnemyDifficulty = (int)_modifiedStartHealth;
-            if(_modifiedInterval <= .75f || _passedSeconds >= 60) return;
+            if(_modifiedInterval <= _minInterval ) return;
+            _killedEnemyCount++;
+            if (_killedEnemyCount % 3 != 0) return;
             _modifiedInterval -= .25f;
             SetSpawnCycle(_modifiedInterval);
+
         }
         private void Spawn()
         {
             //todo change
             _spawner.SpawnStickman();
             _passedSeconds += _modifiedInterval;
-            Debug.Log("Spawned " + _passedSeconds);
-            if (_passedSeconds >= 60)
+            switch (_passedSeconds)
             {
-                _enemySpawnCycle?.Dispose();
-                return;
-            }
-
-            if (_passedSeconds >= 30 && _modifiedInterval >= 5f)
-            {
-                _modifiedInterval = 4f;
-                SetSpawnCycle(_modifiedInterval);
-            }
-            else if(_passedSeconds >= 45 && _modifiedInterval >= 4f)
-            {
-                _modifiedInterval = 3f;
-                SetSpawnCycle(_modifiedInterval);
+                case >= 15 when _modifiedInterval >= 3f:
+                    _modifiedInterval = 2.5f;
+                    SetSpawnCycle(_modifiedInterval);
+                    break;
+                case >= 30 when _modifiedInterval >= 2.5f:
+                    _modifiedInterval = 2f;
+                    SetSpawnCycle(_modifiedInterval);
+                    break;
+                case >= 45 when _modifiedInterval >= 2f:
+                    _modifiedInterval = 1.5f;
+                    SetSpawnCycle(_modifiedInterval);
+                    break;
+                case >= 60 when _modifiedInterval > _minInterval:
+                    _modifiedInterval = _minInterval;
+                    break;
             }
             _userProgressData.SpawnInterval = _modifiedInterval;
         }

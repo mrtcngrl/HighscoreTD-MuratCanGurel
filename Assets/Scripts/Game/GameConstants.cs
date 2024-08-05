@@ -6,7 +6,7 @@ namespace Scripts.Game
 {
     public static class GameConstants
     {
-        public const int StartCoinAmount = 500;
+        public const int StartCoinAmount = 50;
         public const float BoosterIncreasePercent = .1f;
         public const float BoosterDuration = 5f;
         public static LayerMask Ground;

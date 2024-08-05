@@ -73,9 +73,7 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
                 }
                 ClosestTarget = targetCollider.attachedRigidbody?.GetComponent<IHittable>();
             }
-
             TryToFire();
-            
         }
 
         protected virtual void TryToFire()
@@ -90,7 +88,6 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
         }
         public virtual void OnBoosterValueChange(bool isBoost)
         {
-            Debug.LogError("Offf");
             Cooldown = isBoost ? Cooldown / 2f : Properties.Cooldown;
             HasTimer = false;
             FireRoutine?.Dispose();

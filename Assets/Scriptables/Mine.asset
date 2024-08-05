@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 1
   _startPrice: 70
   _prefab: {fileID: 7608292823707385864, guid: 6c249278c56a8574fb7217c8679d4c44, type: 3}
-  _priceIncreaseAmount: 30
+  _priceIncreaseAmount: 140
   Damage: 20
   Range: 5
   Cooldown: 5

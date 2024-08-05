@@ -1,7 +1,6 @@
 using System;
 using Game.Pool;
 using Scripts.Game.Components.TurretSystem.Scriptable;
-using Scripts.Game.Components.TurretSystem.Turrets;
 using Scripts.Game.Controllers;
 using Scripts.User;
 using TMPro;
@@ -27,7 +26,7 @@ namespace Scripts.Game.UI.TurretPurchaseSystem
             _selectionController = selectionController;
             _userProgressDataManager = userProgressDataManager;
         }
-
+        
         public void Initialize(int price, Action<TurretPurchaseButton> callback)
         {
             SetPrice(price);
@@ -37,7 +36,6 @@ namespace Scripts.Game.UI.TurretPurchaseSystem
 
         private void Create()
         {
-            Debug.LogError("Clicked");
             if(_price > _userProgressDataManager.CoinAmount ||!GameController.Instance.CanSpawnNewTurret()) return;
             var turret = GameController.Instance.CreateTurret(_turretProperties.Prefab, Vector3.back * 10);
              _selectionController.SetSelectable(turret);

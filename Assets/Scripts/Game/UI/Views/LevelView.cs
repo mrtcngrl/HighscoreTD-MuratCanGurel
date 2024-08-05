@@ -32,7 +32,6 @@ namespace Scripts.Game.UI.Views
             GameConstants.ScoreChanged += OnScoreChanged;
             GameConstants.OnSessionEnd += OnSessionEnd;
             GameConstants.OnEnemyDie += FillBooster;
-            GameConstants.OnDataLoad += FillBooster;
             _pulseAnim = DOTween.Sequence()
                 .Append(_boosterButton.transform.DOScale(1.2f, 0.2f))
                 .Append(_boosterButton.transform.DOScale(1f, 0.2f)).SetAutoKill(false);
@@ -93,7 +92,6 @@ namespace Scripts.Game.UI.Views
             GameController.BoosterActive.Value = true;
             _boosterButton.interactable = false;
             _pulseAnim?.Pause();
-            Debug.LogError("BoosterUsed");
             _boosterTimer?.Dispose();
             SetFillerValue(_fillAmount,GameConstants.BoosterDuration);
             _boosterTimer = Observable.Timer(TimeSpan.FromSeconds(GameConstants.BoosterDuration))
@@ -101,12 +99,12 @@ namespace Scripts.Game.UI.Views
         }
         private void OnBoosterEnd()
         {
-            Debug.LogError("BoosterEnd");
             GameController.BoosterActive.Value = false;
         }
 
         private void OnSessionEnd()
         {
+            _fillAmount = 0;
             _boosterProgressImage.fillAmount = 0;
             _scorePopup.ShowPopup();
             _boosterTimer?.Dispose();

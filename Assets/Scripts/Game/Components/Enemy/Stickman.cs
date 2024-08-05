@@ -11,13 +11,13 @@ namespace Scripts.Game.Components.Enemy
     {
         private float _health;
         [SerializeField] private float _speed;
-        [SerializeField] private int _price;
         [SerializeField] private Transform _transform;
         [SerializeField] private GameObject _model;
         [SerializeField] private ParticleSystem deathParticle;
         private Tween _walkTween;
         private Action<Stickman> _returnAction;
         private IDisposable returnTimer;
+        private int _price;
         private void Awake()
         {
             _transform = transform;
@@ -35,7 +35,6 @@ namespace Scripts.Game.Components.Enemy
 
         public void OnHit(float damage)
         {
-            Debug.LogError(_health+" "+damage);
             _health -= damage;
             if(_health <= 0)
                 Die();

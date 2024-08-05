@@ -48,7 +48,7 @@ namespace Game.Pool
         public void SpawnStickman()
         {
             Stickman stickman = _stickmanPool.Pull(_enemySpawnTransform.position);
-            stickman.Initialize(stickmanTargetPoint,_enemyController.StartHealth,10);
+            stickman.Initialize(stickmanTargetPoint,_enemyController.StartHealth,20);
         }
 
         private void PushAll()

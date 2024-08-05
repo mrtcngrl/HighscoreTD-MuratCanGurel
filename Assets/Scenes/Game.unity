@@ -2251,7 +2251,7 @@ MonoBehaviour:
   _coinText: {fileID: 1019827538}
   _scoreText: {fileID: 925884159}
   _scorePopup: {fileID: 1947084674}
-  _recoverPopup: {fileID: 0}
+  _recoverPopup: {fileID: 650467287}
   _boosterProgressImage: {fileID: 429683338}
   _boosterButton: {fileID: 429683340}
 --- !u!1 &478433823
@@ -8287,10 +8287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939888f614814312b12b034a259680cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interval: 5
+  _interval: 3
   _minInterval: 1
   _portalParticle: {fileID: 624163138}
-  _startHealth: 100
+  _startHealth: 20
 --- !u!1 &1767003416
 GameObject:
   m_ObjectHideFlags: 0

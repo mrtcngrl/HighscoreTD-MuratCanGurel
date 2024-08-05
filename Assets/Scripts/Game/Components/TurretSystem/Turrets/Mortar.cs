@@ -22,7 +22,6 @@ namespace Scripts.Game.Components.TurretSystem.Turrets
 
         protected override void CheckArea()
         {
-            Debug.LogError("cheking-1");
             var Colliders = Physics.OverlapSphere(transform.position, Range, GameConstants.Enemy).ToList();
             float closestDistanceSqr = Mathf.Infinity;
             Collider targetCollider = null;
